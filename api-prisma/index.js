@@ -7,7 +7,7 @@ app.use(express.json())
 app.use('/contatos', contatosRoutes)
 
 app.get('/alive', (request, response) => {
-    return response.json({message: "vivão"})
+    return response.json({message: "online 2"})
 })
 
 

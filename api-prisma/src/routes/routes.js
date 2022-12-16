@@ -1,26 +1,17 @@
 const express = require('express');
 const axios = require('axios')
 const { v4: uuid_v4, validate } = require('uuid')
-const { PrismaClient } = require('@prisma/client')
+const { PrismaClient } = require('@prisma/client');
+const ContatosService = require('../services/ContatoServices');
 
 const contatosRoutes = express.Router();
-// const ContatosService = require('../services/ContatosService');
 
-const prisma = new PrismaClient
+contatosRoutes.post("", (request, response) => {
 
-contatosRoutes.post("", async (request, response) => {
-    const contatos = request.body;
-   
-    result = await prisma.contatos.createMany({
-        data: contatos
-    })
+    const contatos = new ContatosService();
+    const resultado = contatos.store(request.body);
 
-    if (result) {
-        return response.status(200).send("Contatos cadastrados com sucesso")
-    }
-    
-    return response.status(400).json({ "message": "Erro ao cadastrar os contatos", "result": result})
-
+    response.status(resultado.code).json(resultado)
 })
 
 module.exports = contatosRoutes
